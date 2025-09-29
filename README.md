@@ -1,18 +1,70 @@
 # MemeQA: Holistic Evaluation for Meme Understanding
 
+[Paper](https://aclanthology.org/2025.acl-long.927/)
+
 MemeQA is a dataset of over 9000 questions on meme understanding abilities. There are two versions -- $None^-$ (without "None of the above" option) and $$None^+$$ (with "None of the above" option). 
 
-The dataset was publised in a paper with the same name at ACL 2025: https://aclanthology.org/2025.acl-long.927/
+Access the data under `data/`. The two dataset versions are stored in `none-minus/` and `none-plus/`. The paragraphs that preceed question generation is at `paragraphs.json`. The original meme images can be found in the repository of [SemEval 2021 Task 6](https://github.com/di-dimitrov/SEMEVAL-2021-task6-corpus/tree/main/data).
 
+## Experiments
 
-## Data
+### Install
 
-Relevant data files are in `data/`:
-- The two dataset versions are stored in `none-minus/` and `none-plus/`. There, the JSON files show the questions, options, answer key, and other fields. 
-- The paragraphs written that preceed question generation is at `paragraphs.json`.
+Requires CUDA 11.8 and at least 48GB of GPU RAM. In our scripts, we assume two 24GB GPUs when setting `DEVICES=0,1`.
 
-The original meme images can be found in the repository of the [SemEval 2021 Task 6](https://github.com/di-dimitrov/SEMEVAL-2021-task6-corpus/tree/main/data).
+```bash
+pip install poetry
+poetry shell
+poetry install
+export DEVICES=0,1
+```
 
+### Reproducing experimental results
+
+Zero-shot results on the two versions of MemeQA (Table 2):
+```bash
+# zero-shot evaluation on none-minus
+bash scripts/eval_zero_minus.sh llava $DEVICES # 8:17
+bash scripts/eval_zero_minus.sh blip $DEVICES
+bash scripts/eval_zero_minus.sh iblip $DEVICES
+bash scripts/eval_zero_minus.sh qwen $DEVICES
+
+# zero-shot evaluation on none-plus
+bash scripts/eval_zero_plus.sh llava $DEVICES
+bash scripts/eval_zero_plus.sh blip $DEVICES # 2:22
+bash scripts/eval_zero_plus.sh iblip $DEVICES
+bash scripts/eval_zero_plus.sh qwen $DEVICES
+
+# external models
+# TODO: add scripts for QvQ and GPT-4o (related to predict_gpt.py and evaluate_gpt.py)
+```
+
+Fine-tuned results on the two versions of MemeQA (Table 3):
+```bash
+# train
+# NOTE: Note the model weight directory
+bash scripts/train_minus.sh llava $DEVICES
+bash scripts/train_minus.sh blip $DEVICES
+bash scripts/train_minus.sh iblip $DEVICES
+bash scripts/train_minus.sh qwen $DEVICES
+bash scripts/train_plus.sh llava $DEVICES
+bash scripts/train_plus.sh blip $DEVICES
+bash scripts/train_plus.sh iblip $DEVICES
+bash scripts/train_plus.sh qwen $DEVICES
+
+# evaluate
+# NOTE: replace ... with the path to the model weights printed by the training script
+bash scripts/eval_ft_minus.sh llava $DEVICES ...
+bash scripts/eval_ft_minus.sh blip $DEVICES ...
+bash scripts/eval_ft_minus.sh iblip $DEVICES ...
+bash scripts/eval_ft_minus.sh qwen $DEVICES ...
+bash scripts/eval_ft_plus.sh llava $DEVICES ...
+bash scripts/eval_ft_plus.sh blip $DEVICES ...
+bash scripts/eval_ft_plus.sh iblip $DEVICES ...
+bash scripts/eval_ft_plus.sh qwen $DEVICES ...
+```
+
+All results will be stored in `out/`, while model weights are in `weights/`.
 
 ## Cite
 
