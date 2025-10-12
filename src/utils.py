@@ -61,7 +61,6 @@ def model_factory(model_id: str):
         )
     elif get_model_family(model_id) == MODEL_FAMILY.BLIP2:
         print('Using Blip2')
-        print("WARNING: This model cannot be run in a multi-gpu env.")
         quant_config = BitsAndBytesConfig(load_in_8bit=True)
         base_model = Blip2ForConditionalGeneration.from_pretrained(
             model_id,

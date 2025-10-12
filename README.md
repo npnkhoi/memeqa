@@ -8,43 +8,58 @@ Access the data under `data/`. The two dataset versions are stored in `none-minu
 
 ## Experiments
 
-### Install
+### Setup
 
 Requires CUDA 11.8 and at least 48GB of GPU RAM. In our scripts, we assume two 24GB GPUs when setting `DEVICES=0,1`.
 
+Run:
 ```bash
 pip install poetry
 poetry shell
 poetry install
 export DEVICES=0,1
+cp .env.example .env
 ```
+
+For big-models, we need to set up API services:
+- GPT4o: In Azure AI Foundry, create a GPT4o deployment. Then copy the subscription key and azure endpoint into `.env`.
+- QvQ: At the time of our experiments, we used the available service on Nebius AI. However, they recently ended supporting the model. We recommend finding alternative vendors by checking "Inference Providers" on [HuggingFace](https://huggingface.co/Qwen/QVQ-72B-Preview).
+
+> **NOTE:** Students can get $100 of free Azure credits via the [GitHub Student Developer Pack](https://education.github.com/pack).
+
 
 ### Reproducing experimental results
 
 Zero-shot results on the two versions of MemeQA (Table 2):
 ```bash
-# zero-shot evaluation on none-minus
-bash scripts/eval_zero_minus.sh llava $DEVICES # 8:17
+# zero-shot evaluation of local models on none-minus
+bash scripts/eval_zero_minus.sh llava $DEVICES # 8.5 mins
 bash scripts/eval_zero_minus.sh blip $DEVICES
 bash scripts/eval_zero_minus.sh iblip $DEVICES
 bash scripts/eval_zero_minus.sh qwen $DEVICES
 
-# zero-shot evaluation on none-plus
+
+# zero-shot evaluation of local models on none-plus
 bash scripts/eval_zero_plus.sh llava $DEVICES
-bash scripts/eval_zero_plus.sh blip $DEVICES # 2:22
+bash scripts/eval_zero_plus.sh blip $DEVICES # 2.5 mins
 bash scripts/eval_zero_plus.sh iblip $DEVICES
 bash scripts/eval_zero_plus.sh qwen $DEVICES
 
-# external models
-# TODO: add scripts for QvQ and GPT-4o (related to predict_gpt.py and evaluate_gpt.py)
+# zero-shot evaluation of external models
+# GPT-4o
+python -m src.predict_gpt none_minus gpt-4o out/4o_minus.json & python -m src.evaluate_gpt out/4o_minus.json
+python -m src.predict_gpt none_plus gpt-4o out/4o_plus.json & python -m src.evaluate_gpt out/4o_plus.json
+# QvQ: The two following commands are broken due to the end of support for QvQ on Nebius.
+# python -m src.predict_gpt none_minus qvq out/qvq_minus.json & python -m src.evaluate_gpt out/qvq_minus.json
+# python -m src.predict_gpt none_plus qvq out/qvq_plus.json & python -m src.evaluate_gpt out/qvq_plus.json
 ```
 
 Fine-tuned results on the two versions of MemeQA (Table 3):
 ```bash
 # train
 # NOTE: Note the model weight directory
-bash scripts/train_minus.sh llava $DEVICES
-bash scripts/train_minus.sh blip $DEVICES
+bash scripts/train_minus.sh llava $DEVICES 
+bash scripts/train_minus.sh blip $DEVICES # 2 hours 10 mins
 bash scripts/train_minus.sh iblip $DEVICES
 bash scripts/train_minus.sh qwen $DEVICES
 bash scripts/train_plus.sh llava $DEVICES
