@@ -2,11 +2,15 @@
 
 [Paper](https://aclanthology.org/2025.acl-long.927/)
 
-MemeQA is a dataset of over 9000 questions on meme understanding abilities. There are two versions -- $None^-$ (without "None of the above" option) and $$None^+$$ (with "None of the above" option). 
+MemeQA is a dataset of over 9000 questions on meme understanding abilities, hosted under `data/`.
 
-Access the data under `data/`. The two dataset versions are stored in `none-minus/` and `none-plus/`. The paragraphs that preceed question generation is at `paragraphs.json`. The original meme images can be found in the repository of [SemEval 2021 Task 6](https://github.com/di-dimitrov/SEMEVAL-2021-task6-corpus/tree/main/data).
+The two dataset versions are stored in `data/none-minus/` and `data/none-plus/`. (There are two versions: $None^-$ doesn't have "None of the above" options, while $$None^+$$ has "None of the above" options.)
 
-## Experiments
+The original meme images can be found in the repository of [SemEval 2021 Task 6](https://github.com/di-dimitrov/SEMEVAL-2021-task6-corpus/tree/main/data), and should be downloaded into `data/semeval_img/`.
+
+The paragraphs that preceed question generation is at `paragraphs.json`. 
+
+## Reproducing the benchmarking experiments
 
 ### Setup
 
@@ -28,7 +32,7 @@ For big-models, we need to set up API services:
 > **NOTE:** Students can get $100 of free Azure credits via the [GitHub Student Developer Pack](https://education.github.com/pack).
 
 
-### Reproducing experimental results
+### Experiments
 
 Zero-shot results on the two versions of MemeQA (Table 2):
 ```bash
@@ -81,6 +85,10 @@ bash scripts/eval_ft_plus.sh qwen $DEVICES ...
 
 All results will be stored in `out/`, while model weights are in `weights/`.
 
+## Reproducing Adversarial Filtering
+
+Refer to `src/af/README.md`
+
 ## Cite
 
 Please cite our paper if you find our resources useful for your work.
@@ -121,3 +129,8 @@ Please cite our paper if you find our resources useful for your work.
 }
 ```
 
+## Contacts
+Feel free to reach out to the following people in case you have any questions or comments:
+* Khoi Nguyen (khoi.nguyen6@utdallas.edu)
+* Terrence Li (terrence.li@utdallas.edu)
+* Vincent Ng (vince@utdallas.edu)
