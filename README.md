@@ -1,10 +1,10 @@
 # MemeQA: Holistic Evaluation for Meme Understanding
 
-[Paper](https://aclanthology.org/2025.acl-long.927/)
+MemeQA is a dataset of over 9000 questions on meme understanding abilities. [Read our paper](https://aclanthology.org/2025.acl-long.927/)
 
-MemeQA is a dataset of over 9000 questions on meme understanding abilities, hosted under `data/`.
+## Data
 
-The two dataset versions are stored in `data/none-minus/` and `data/none-plus/`. (There are two versions: $None^-$ doesn't have "None of the above" options, while $$None^+$$ has "None of the above" options.)
+The dataset is hosted under `data/`. It has two versions: $None^-$ doesn't have "None of the above" options, while $$None^+$$ has "None of the above" options.
 
 The original meme images can be found in the repository of [SemEval 2021 Task 6](https://github.com/di-dimitrov/SEMEVAL-2021-task6-corpus/tree/main/data), and should be downloaded into `data/semeval_img/`.
 
