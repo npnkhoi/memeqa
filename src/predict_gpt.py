@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 import openai
 from tqdm import tqdm
 from src.collator import Collator
-from src.data import IMG_DIR
-from src.dataset.qset import QuestionSet
+from src.dataset import IMG_DIR
+from src.qset import QuestionSet
 from src.prompt import PromptGenerator, PromptId
 import base64
 import wandb

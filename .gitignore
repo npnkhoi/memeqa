@@ -2,6 +2,8 @@
 wandb/
 weights/
 out/
+tmp/
+data/semeval_img/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

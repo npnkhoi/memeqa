@@ -25,7 +25,7 @@ from src.const import DEFAULT_DATA_DIR, Color
 from src.evaluate import evaluate, predict
 from src.prompt import PromptId
 from src.utils import get_metric_names, model_factory, processor_n_tokenizer_factory
-from src.data import data_factory
+from src.dataset import data_factory
 import torch
 from peft import get_peft_model, LoraConfig
 from torch.utils.data import DataLoader, Subset

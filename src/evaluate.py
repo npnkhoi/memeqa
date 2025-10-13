@@ -10,7 +10,7 @@ import numpy as np
 from typing import Dict
 from src.collator import Collator
 from src.const import DEFAULT_DATA_DIR
-from src.data import data_factory
+from src.dataset import data_factory
 from src.prompt import PromptId
 from src.utils import log
 from src.utils import model_factory, processor_n_tokenizer_factory

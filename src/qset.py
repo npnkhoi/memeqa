@@ -1,5 +1,5 @@
 import json
-from src.data import Question
+from src.dataset import Question
 
 class QuestionSet:
     """

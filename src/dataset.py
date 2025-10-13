@@ -4,7 +4,7 @@ from typing import Dict
 from torch.utils.data import Dataset
 from src.utils import Question
 
-IMG_DIR = "../../literature/semeval_img" # FIXME!
+IMG_DIR = "data/semeval_img"
 
 class MemeQADataset(Dataset):
     """
